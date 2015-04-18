@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Usercenter.aspx.cs" Inherits="Usercenter" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Usercenter.aspx.cs" Inherits="User.Usercenter" %>
 
 <!DOCTYPE html>
 

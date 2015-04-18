@@ -1,38 +1,53 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using BLL;
+using Entity;
 
-public partial class MailWrite : System.Web.UI.Page
+namespace Mail
 {
-    protected static int spanDrafts = 0;
-    protected static int spanInbox = 0;
-    protected void Page_Load(object sender, EventArgs e)
+    public partial class MailWrite : System.Web.UI.Page
     {
+        private Employee actUser;
+        private int _spanDrafts = 0;
+        private int _spanInbox = 0;
 
-    }
-
-    protected void toID_Check(object sender, EventArgs e)
-    {
-        var toid = toID.Text;
-        toID_Tip.Visible = true;
-        if (hasID())
+        public Employee ActUser
         {
-            submit.Enabled = true;
-            toID_Tip.Text = "您输入的收件人可用！";
-        }
-        else
-        {
-            submit.Enabled = false;
-            toID_Tip.Text = "您输入的收件人不存在！";
-        }
-    }
+            get
+            {
+                return actUser;
+            }
 
-    private bool hasID()
-    {
-        return false;
+            set
+            {
+                actUser = value;
+            }
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+            Master.Page.Header.Title = "海云天公司内部管理系统——首页";
+            ActUser = Master.ActUser;
+            UCTabDefault.SpanDrafts = _spanDrafts;
+            UCTabDefault.SpanInbox = _spanInbox;
+        }
+
+        protected void toID_Check(object sender, EventArgs e)
+        {
+            toID_Tip.Visible = true;
+            if (EmpManager.hasID(toID.Text))
+            {
+                submit.Enabled = true;
+                toID_Tip.Text = "您输入的收件人可用！";
+            }
+            else
+            {
+                submit.Enabled = false;
+                toID_Tip.Text = "您输入的收件人不存在！";
+            }
+        }
+
+        
+
     }
 }

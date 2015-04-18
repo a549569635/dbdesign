@@ -1,22 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.IO;
+using System.Text;
 
-/// <summary>
-/// Summary description for Common
-/// </summary>
-public class Common
+namespace BLL
 {
-    public Common()
+    /// <summary>
+    /// Summary description for Common
+    /// </summary>
+    public class Common
     {
-        //
-        // TODO: Add constructor logic here
-        //
-    }
-
-    public static void logOut()
-    {
-        
+        public static string GetMD5HashFromStream(Stream stream)
+        {
+            try
+            {
+                System.Security.Cryptography.MD5CryptoServiceProvider md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
+                byte[] data = md5.ComputeHash(stream);
+                StringBuilder sBuilder = new StringBuilder();
+                for (int i = 0; i < data.Length; i++)
+                {
+                    sBuilder.Append(data[i].ToString("x2"));
+                }
+                return sBuilder.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("GetMD5HashFromFile() fail,error:" + ex.Message);
+            }
+        }
     }
 }

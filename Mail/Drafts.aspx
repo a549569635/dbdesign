@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Drafts.aspx.cs" Inherits="MailDrafts" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Drafts.aspx.cs" Inherits="Mail.MailDrafts" %>
 
 <!DOCTYPE html>
 

@@ -1,7 +1,10 @@
-﻿<%@ Page MasterPageFile="/Master.master" Language="C#" AutoEventWireup="true" CodeFile="Write.aspx.cs" Inherits="MailWrite" %>
+﻿<%@ Page MasterPageFile="~/Master.master" Language="C#" AutoEventWireup="true" CodeFile="Write.aspx.cs" Inherits="Mail.MailWrite" %>
+<%@ MasterType VirtualPath="~/Master.master" %>
+<%@ Register Src="~/UCTabDefault.ascx" TagPrefix="uc1" TagName="UCTabDefault" %>
 
-<asp:Content runat="server" ContentPlaceHolderID="head">
-    <title>写信</title>
+
+<asp:Content runat="server" ContentPlaceHolderID="contentTab">
+    <uc1:UCTabDefault runat="server" ID="UCTabDefault" />
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="content" runat="server">
@@ -9,14 +12,14 @@
     <asp:ScriptManager ID="ScriptManager" runat="server"></asp:ScriptManager>
     <asp:UpdatePanel ID="mainPanel" runat="server">
         <ContentTemplate>
-            <asp:Panel class="panel panel-default" runat="server" ID="panel_Write" Style="min-height: 700px">
+            <div class="panel panel-default pane-content">
                 <div class="panel-heading">
                     <h3 class="panel-title">写信</h3>
                 </div>
                 <div class="panel-body">
                     <div class="row">
                         <label>收件人员工号：</label>
-                        <asp:TextBox ID="toID" runat="server" OnTextChanged="toID_Check"  AutoPostBack="true" required autofocus></asp:TextBox>
+                        <asp:TextBox ID="toID" runat="server" OnTextChanged="toID_Check"  AutoPostBack="true" autofocus></asp:TextBox>
                         <asp:Label ID="toID_Tip" runat="server" Text="" Visible="False"/>
                     </div>
                     <div class="row">
@@ -45,7 +48,7 @@
                         <asp:Button ID="saveDraft" runat="server" Text="保存草稿" />
                     </div>
                 </div>
-            </asp:Panel>
+            </div>
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

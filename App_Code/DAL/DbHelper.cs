@@ -27,7 +27,7 @@ namespace DAL
         public DbHelper()
 
         {
-            _connectionString = ConfigurationManager.AppSettings["conStr"];
+            _connectionString = ConfigurationManager.ConnectionStrings["conStr"].ConnectionString;
         }
 
         /// <summary>  

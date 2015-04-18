@@ -6,18 +6,12 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <asp:ContentPlaceHolder ID="head" runat="server">
-    </asp:ContentPlaceHolder>
+    <title>海云天公司内部管理系统</title>
     <link rel="shortcut icon" href="favico.ico" />
-    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/css/mycss.css"/>
-    <script src="http://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
-    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <style type="text/css">
-        body {
-            font-family: 'Microsoft Yahei UI','Microsoft YaHei',SimHei,sans-serif;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/default.css" />
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
 </head>
 <body>
     <form runat="server">
@@ -34,13 +28,22 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-left">
-                        <li><a href="/Admin/Admin.aspx">后台入口</a></li>
-                        <li><a href="/Manager/Manager.aspx">经理入口</a></li>
-                        <li><a href="/Sign.aspx">考勤操作</a></li>
+                        <% if (ActUser.Isadmin)
+                            {
+                                Response.Write("<li><a href=\"/Admin/Admin.aspx\">后台入口</a></li>");
+                            }
+                            else if (ActUser.Ismgr)
+                            {
+                                Response.Write("<li><a href=\"/Manager/Leaverequest.aspx\">经理入口</a></li>");
+                            }
+                            else
+                            {
+                                Response.Write("<li><a href=\"/User/Sign.aspx\">考勤操作</a></li>");
+                            }%>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <p class="navbar-text" style="margin-left: 5px">你好，<a href="/User/Usercenter.aspx">何钰童</a></p>
+                            <p class="navbar-text" style="margin-left: 5px">你好，<a href="/User/Usercenter.aspx"><%Response.Write(UserName); %></a></p>
                         </li>
                         <li>
                             <asp:LinkButton runat="server" OnClick="LogOut">退出登录</asp:LinkButton></li>
@@ -52,54 +55,28 @@
         <div class="container">
             <div class="row" style="min-height: 700px">
                 <!--左侧边栏-->
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="jumbotron" style="padding: 16px">
                         <h4 style="margin-top: 0">个人资料</h4>
-                        <asp:ImageButton runat="server" ID="img_portrait" src="/头像-default.png" alt="用户头像" class="img-thumbnail media-middle" Style="height: 130px; width: 100px; display: block; margin: 16px auto" />
+                        <a href="#">
+                            <img alt="用户头像" class="img-thumbnail media-middle" src="<%Response.Write(ActUser.PhotoPath); %>" style="display: block; margin: 16px auto" />
+                        </a>
                         <div class="caption">
                             <dl class="dl-horizontal">
-                                <dt style="width: 52px">姓名：</dt>
-                                <dd style="margin-left: 64px">何钰童</dd>
-                                <dt style="width: 52px">ID：</dt>
-                                <dd style="margin-left: 64px">201300130018</dd>
-                                <dt style="width: 52px">职务：</dt>
-                                <dd style="margin-left: 64px">销售部 实习业务员</dd>
+                                <dt style="width: 42px">姓名：</dt>
+                                <dd style="margin-left: 48px"><%Response.Write(UserName); %></dd>
+                                <dt style="width: 42px">ID：</dt>
+                                <dd style="margin-left: 48px"><%Response.Write(UserID); %></dd>
+                                <dt style="width: 42px">职务：</dt>
+                                <dd style="margin-left: 48px"><%Response.Write(UserInfo); %></dd>
                             </dl>
                         </div>
                     </div>
-                    <div class="panel panel-default" style="padding: 4px">
-                        <ul class="nav nav-pills nav-stacked">
-                            <li role="presentation" <%= Request.RawUrl.ToLower().Contains("default.aspx")?"class=\"active\"":""%>>
-                                <a href="/Default.aspx">首页</a>
-                            </li>
-                            <li role="presentation" <%= Request.RawUrl.ToLower().Contains("notice.aspx")?"class=\"active\"":""%>>
-                                <a href="/Notice/Notice.aspx">公文公告</a>
-                            </li>
-                            <li role="presentation" <%= Request.RawUrl.ToLower().Contains("mail.aspx")?"class=\"active\"":""%>>
-                                <a href="/Mail/Mail.aspx">信箱</a>
-                            </li>
-                            <li role="presentation" <%= Request.RawUrl.ToLower().Contains("write.aspx")?"class=\"active\"":""%>>
-                                <a href="/Mail/Write.aspx" style="margin-left: 16px">写信</a>
-                            </li>
-                            <li role="presentation" <%= Request.RawUrl.ToLower().Contains("drafts.aspx")?"class=\"active\"":""%>>
-                                <a href="/Mail/Drafts.aspx" style="margin-left: 16px">草稿箱<span class="badge pull-right"><% Response.Write(spanDrafts); %></span>
-                                </a>
-                            </li>
-                            <li role="presentation" <%= Request.RawUrl.ToLower().Contains("inbox.aspx")?"class=\"active\"":""%>>
-                                <a href="/Mail/Inbox.aspx" style="margin-left: 16px">收件箱<span class="badge pull-right"><%Response.Write(spanInbox); %></span>
-                                </a>
-                            </li>
-                            <li role="presentation" <%= Request.RawUrl.ToLower().Contains("sent.aspx")?"class=\"active\"":""%>>
-                                <a href="/Mail/Sent.aspx" style="margin-left: 16px">发件箱</a>
-                            </li>
-                            <li role="presentation" <%= Request.RawUrl.ToLower().Contains("addbook.aspx")?"class=\"active\"":""%>>
-                                <a href="/User/Addbook.aspx">通讯录</a>
-                            </li>
-                        </ul>
-                    </div>
+                    <asp:ContentPlaceHolder ID="contentTab" runat="server">
+                    </asp:ContentPlaceHolder>
                 </div>
                 <!--右侧部分-->
-                <div class="col-md-9" style="min-height: 700px">
+                <div class="col-md-10" style="min-height: 640px">
                     <asp:ContentPlaceHolder ID="content" runat="server">
                     </asp:ContentPlaceHolder>
                 </div>

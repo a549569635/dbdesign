@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Sent.aspx.cs" Inherits="MailSent" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Sent.aspx.cs" Inherits="Mail.MailSent" %>
 
 <!DOCTYPE html>
 
